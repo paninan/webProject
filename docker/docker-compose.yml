@@ -1,0 +1,36 @@
+# https://www.cloudreach.com/blog/containerize-this-php-apache-mysql-within-docker-containers/
+version: "3.2"
+services:
+  php:
+    build: './php/'
+    networks:
+      - backend
+    volumes:
+      - C:/Repo/Waan/webProject/project101/:/var/www/html/
+  mysql:    
+    image: mysql:5.7
+    # build: './mysql/'
+    command: mysqld --sql_mode=""
+    networks:
+      - backend
+    volumes:      
+      - ./mysql/data/:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3306:3306"
+  apache:
+    build: './apache/'
+    depends_on:
+      - php
+      - mysql
+    networks:
+      - frontend
+      - backend
+    ports:
+      - "8080:80"
+    volumes:
+      - C:/Repo/Waan/webProject/project101/:/var/www/html/
+networks:
+  frontend:
+  backend:
