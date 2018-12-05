@@ -8,11 +8,8 @@
     <title>Beautiful Wow :: Waan</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="<?php echo site_url()?>assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo site_url()?>assets/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="<?php echo site_url()?>assets/css/carousel.css"" rel="stylesheet">
     <link href="<?php echo site_url()?>assets/css/sticky-footer.css"" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="<?php echo site_url()?>assets/css/signin.css" rel="stylesheet">

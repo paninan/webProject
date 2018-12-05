@@ -6,7 +6,7 @@ services:
     networks:
       - backend
     volumes:
-      - C:/Repo/Waan/webProject/project101/:/var/www/html/
+      - /Users/waan/Workspace/webProject/project101/:/var/www/html/
   mysql:    
     image: mysql:5.7
     # build: './mysql/'
@@ -30,7 +30,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - C:/Repo/Waan/webProject/project101/:/var/www/html/
+      - /Users/waan/Workspace/webProject/project101/:/var/www/html/
 networks:
   frontend:
   backend:

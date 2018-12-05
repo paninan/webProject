@@ -26,7 +26,7 @@ class Auth extends CI_Controller {
             if ( $rs->num_rows() == 0 ){
                 echo "Login Fail";
             }else{
-                echo "Login Pass";
+                redirect('Home/index');
             }
 
         }else{
