@@ -13,8 +13,7 @@
     </header>
 
     <main role="main" class="container">
-    <br/>
-    <br/>
+    
         <form>
             <div class="form-group">
                 <label for="exampleInputEmail1">Name</label>

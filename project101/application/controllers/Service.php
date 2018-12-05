@@ -42,8 +42,12 @@ class Service extends CI_Controller {
 
 		// get user 0->guest || -> member
 		$user = 0;
-
 		if($this->input->post('email') !== FALSE  && !empty($this->input->post('email') ) ){
+			
+			if( $this->session->userdata('logged_in') === TRUE){
+				$user = $this->session->userdata('user_id');
+			}
+
 			$end_dt  = ($start_dt + ($service->service_time * 60) ) -1 ;
 			$msg = $this->input->post('message');
 			$telephone = $this->input->post('telephone');

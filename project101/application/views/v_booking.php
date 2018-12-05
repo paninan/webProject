@@ -27,8 +27,7 @@
 </head>
 
 <body>
-    <br />
-    <br />
+    
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <?php $this->load->view('include/nav.php');?>
@@ -36,17 +35,31 @@
     </header>
 
     <main role="main" class="container">
-        <br />
+        
         <h3>Booking</h3>
         <form action="<?php echo current_url();?>" method="post" id="frm-booking">
             <div class="form-group">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                <?php
+                if($this->session->userdata('logged_in') === TRUE){
+                    echo '<input type="email" class="form-control" id="email" name="email" value="'.$this->session->userdata('user_email').'" >';
+                }else{
+                    echo '<input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">';
+                }
+                ?>
+                
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
             <div class="form-group">
                 <label for="telephone">Telephone</label>
-                <input type="text" class="form-control" id="telephone" name="telephone">
+                <?php
+                if($this->session->userdata('logged_in') === TRUE){
+                    echo '<input type="text" class="form-control" id="telephone" name="telephone" value="'.$this->session->userdata('user_phone').'">';
+                }else{
+                    echo '<input type="text" class="form-control" id="telephone" name="telephone">';
+                }
+                ?>
+                
             </div>
             <div class="form-group">
                 <label for="message"></label>

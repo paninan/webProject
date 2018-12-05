@@ -11,5 +11,11 @@
     <link href="<?php echo site_url()?>assets/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="<?php echo site_url()?>assets/css/carousel.css"" rel="stylesheet">
-    <link href="<?php echo site_url()?>assets/css/sticky-footer.css"" rel="stylesheet">
+    <link href="<?php echo site_url()?>assets/css/carousel.css" rel="stylesheet">
+    <link href="<?php echo site_url()?>assets/css/sticky-footer.css" rel="stylesheet">
+    <link href="<?php echo site_url()?>assets/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+    main.container {
+        padding-top:40px !important;
+    }
+    </style>

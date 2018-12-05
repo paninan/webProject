@@ -15,8 +15,7 @@
     <main role="main" class="container">
         
         <div class="container">
-        <br/>
-        <br/>
+        
           <div class="row">
           
             <?php foreach($m_review->result() as $ser ){ ?>

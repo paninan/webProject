@@ -35,8 +35,7 @@
     </header>
 
     <main role="main" class="container">
-        <br />
-        <br />
+        
         <?php ?>
         <form action="<?php echo current_url();?>" method="post" id="frm-search-resv">
             <input type="hidden" name="has_date" value="<?php echo $has_date?>" />
@@ -99,7 +98,8 @@
         <br />
 
         <!-- table time -->
-        <table>
+        <div class="table-responsive">
+        <table class="table table-sm">
             <tr>
                 <th width="200px">Time</th>
                 <?php 
@@ -133,8 +133,8 @@
                     $is_disable = $close_time > (($service_active->service_time*60) + $starttime )-901;
                     $is_avb = $is_avb && $is_disable;
                     
-                    $css_colr = $is_avb ? "style=\"background-color:#9ee0bf\"":"style=\"background-color:#DC143C;color:#FFF;\"";
-                    echo "<td ".$css_colr.">".( $is_avb  ?  "<a href=\"".site_url("service/book/{$has_service}/{$row->beau_id}/${starttime}")."\" class=\"btn btn-success btn-sm\">Book</a>" : "Not Available" )."</td>";
+                    $css_colr = $is_avb ? "style=\"background-color:#9ee0bf\"":"class=\"bg-danger\"";
+                    echo "<td ".$css_colr.">".( $is_avb  ?  "<a href=\"".site_url("service/book/{$has_service}/{$row->beau_id}/${starttime}")."\" class=\"btn btn-success btn-sm btn-block\">Book</a>" : "Not Available" )."</td>";
                 }
                 ?>
             </tr>
@@ -142,6 +142,7 @@
             }
             ?>
         </table>
+        </div>
 
 
 
