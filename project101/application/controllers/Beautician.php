@@ -10,7 +10,8 @@ class Beautician extends CI_Controller {
 		$this->load->model('beautician_model');
 
 		if( !$this->session->userdata('is_beautician')  ){
-			show_error( "no privilage access !!! ~_~?...",203,"Access message");
+			// show_error( "no privilage access !!! ~_~?...",203,"Access message");
+			redirect('auth/login');
 		}
 	}
 
@@ -30,7 +31,7 @@ class Beautician extends CI_Controller {
 	public function confirm($reser_id=NULL)
 	{
 		$this->beautician_model->task_status($reser_id,Beautician_model::STATUS_CONFIRM);
-		redirect('beautician','refresh');
+		redirect('beautician/jobs/comfirm','refresh');
 	}
 
 	public function reject($reser_id=NULL)

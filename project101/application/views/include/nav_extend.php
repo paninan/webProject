@@ -20,7 +20,26 @@ if( ( $this->session->userdata('logged_in') === TRUE) && ($this->session->userda
             
         </a>
         <a class="nav-link <?php echo ($this->uri->rsegment(2)=="income" ? "active" : "" );?>" href="<?php echo site_url('beautician/income');?>">income</a>
-        <a class="nav-link <?php echo ($this->uri->rsegment(2)=="feedback" ? "active" : "");?>"  href="#">feedback</a>
+        <!-- <a class="nav-link <?php echo ($this->uri->rsegment(2)=="feedback" ? "active" : "");?>"  href="#">feedback</a> -->
+    </nav>
+</div>
+</div>
+
+<?php endif?>
+
+
+
+<?php 
+if( ( $this->session->userdata('logged_in') === TRUE) && ($this->session->userdata('is_owner') === TRUE  ) ):
+?>
+
+<div class="nav-scroller bg-white box-shadow">
+    <div class="container">
+    <nav class="nav nav-underline">
+        <a class="nav-link <?php echo ($this->uri->rsegment(2)=="service" ? "active" : "" );?>" href="<?php echo site_url('owner/service');?>">Service</a>
+        <a class="nav-link <?php echo ($this->uri->rsegment(2)=="beautician" ? "active" : "" );?>" href="<?php echo site_url('owner/beautician');?>">Beautician</a>
+        <a class="nav-link <?php echo ($this->uri->rsegment(2)=="income" ? "active" : "" );?>" href="<?php echo site_url('owner/income');?>">Income</a>
+        
     </nav>
 </div>
 </div>

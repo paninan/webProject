@@ -5,16 +5,35 @@ class Service_model extends CI_Model {
     const STATUS_CONFIRM = "CONFIRM";
     const STATUS_REJECT = "REJECT";
 
-    function read( $id=NULL ){
+    function read( $id=NULL ,$active =1 ){
         if(!is_null($id) ) 
         {
-            $rs = $this->db->query("select * from services where service_id = ? ",array($id));
+            $rs = $this->db->query("select * from services where service_active = ? AND service_id = ? ",array($active,$id));
         }
         else
         {
-            $rs = $this->db->query('select * from services');
+            $rs = $this->db->query('select * from services where service_active = ?',array($active));
         }
         
+        return $rs;
+    }
+
+    function readall( $id=NULL){
+        if(!is_null($id) ) 
+        {
+            $rs = $this->db->query("select * from services where AND service_id = ? order by service_active DESC ",array($id));
+        }
+        else
+        {
+            $rs = $this->db->query('select * from services order by service_active DESC');
+        }
+        
+        return $rs;
+    }
+
+    function read_type()
+    {
+        $rs = $this->db->query('select * from services_type');
         return $rs;
     }
 
@@ -34,6 +53,27 @@ class Service_model extends CI_Model {
         );
     
         return $this->db->insert('reservations', $data);
+    }
+
+    function deactive($service_id=NULL)
+    {
+        $this->db->where('service_id',$service_id);
+        $this->db->set('service_active',0);
+        $this->db->update('services');
+        return TRUE;
+    }
+
+    function active($service_id=NULL)
+    {
+        $this->db->where('service_id',$service_id);
+        $this->db->set('service_active',1);
+        $this->db->update('services');
+        return TRUE;
+    }
+
+    function save($data)
+    {
+        $this->db->insert('services', $data);
     }
 
 }

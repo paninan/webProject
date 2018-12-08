@@ -113,6 +113,17 @@ class Beautician_model extends CI_Model {
         $this->db->where('reser_id',$reser_id);
         $this->db->set('pay',1);
         $this->db->update('reservations');
+            
+        if ($this->db->affected_rows() > 0 ){
+            $q = $this->db->get_where('reservations', array('reser_id' => $reser_id));
+            foreach( $q->result() as $row ) {
+                $this->db->query("
+                UPDATE customers
+                SET customer_point = customer_point + 1
+                WHERE customer_id = ? ",array($row->customer_id)
+                );
+            }
+        }
     }
 
 

@@ -31,7 +31,7 @@ function nav_active($first_segment=NULL,$controller_sgm){
     </li>
     <?php 
     if($this->session->userdata('logged_in') === TRUE && 
-    ( $this->session->userdata('is_beautician') === TRUE || $this->session->userdata('is_owner') === TRUE ) )
+    ( $this->session->userdata('is_beautician') === TRUE ) )
     {
     ?>
     <li class="nav-item <?php echo nav_active('beautician',$controller_sgm); ?>">
@@ -40,6 +40,19 @@ function nav_active($first_segment=NULL,$controller_sgm){
       <?php 
     }  
     ?>
+
+    <?php 
+    if($this->session->userdata('logged_in') === TRUE && 
+    ( $this->session->userdata('is_owner') === TRUE  ) )
+    {
+    ?>
+    <li class="nav-item <?php echo nav_active('owner',$controller_sgm); ?>">
+      <a class="nav-link" href="<?php echo site_url('owner');?>">Owner</a>
+    </li>
+      <?php 
+    }  
+    ?>
+    
   </ul>
 
   <?php 

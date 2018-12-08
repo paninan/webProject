@@ -36,7 +36,9 @@ class Auth extends CI_Controller {
                     $this->session->set_userdata('logged_in',TRUE);
                 }
             }else if( preg_match('/^owner.+/',$email) ){
-                $ret = $this->_login_beauticians($email,$passwd);
+                $email = str_replace('owner.','',$email);
+                // $email = preg_replace('/(^owner\.$).(\w+)/i', '$2', $email);
+                $ret = $this->_login_owner($email,$passwd);
                 if( $ret === TRUE){
                     $this->session->set_userdata('logged_in',TRUE);
                 }
@@ -112,7 +114,32 @@ class Auth extends CI_Controller {
     }
 
     private function _login_owner($email,$passwd){
-        $this->session->set_userdata('is_owner',TRUE);
+        // echo $email;
+        // echo $passwd;
+        // exit();
+        $fix_email  = "waan@mail.com";
+        $fix_passwd = "123456";
+        $is_auth    = FALSE;
+
+        if ( ($email == $fix_email ) && ($passwd == $fix_passwd) ){
+            $is_auth = TRUE;
+        }
+
+        if ( $is_auth ){
+            
+            $this->_login_owner = TRUE;
+            $this->session->set_userdata('is_owner',TRUE);
+            $this->session->set_userdata('user_id','0');
+            $this->session->set_userdata('user_name',$fix_email);
+            $this->session->set_userdata('user_gender','W');
+            $this->session->set_userdata('user_email',$fix_email);
+            $this->session->set_userdata('user_phone', '094');
+            $this->session->set_userdata('user_position','Owner');
+            return TRUE;
+        }
+
+        return FALSE;
+
     }
 	
 }
