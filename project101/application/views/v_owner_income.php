@@ -21,18 +21,19 @@
 
             <div class="col-4">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Your jobs</span>
+                    <span class="text-muted">Your Revenue</span>
                     <!-- <span class="badge badge-secondary badge-pill"> </span> -->
                 </h4>
                 <ul class="list-group mb-3">
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0">Monthly</h6>
-                            <small class="text-muted">com. 45% / jobs</small>
+                            <h6 class="my-0">Monthly (
+                                <?php echo date('Y-m');?>)</h6>
+                            <small class="text-muted">com. 55% / jobs</small>
                         </div>
                         <span class="text-muted">฿
                             <?php if($m_income_monthly->num_rows() > 0 ):?>
-                            <?php echo number_format($m_income_monthly->row(0)->beautician_commission); ?>
+                            <?php echo number_format($m_income_monthly->row(0)->owner_commission); ?>
                             <?php endif?> /
                             <?php if($m_income_monthly->num_rows() > 0 ):?>
                             <?php echo $m_income_monthly->row(0)->cnt_job; ?>
@@ -41,15 +42,18 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0">Daily</h6>
-                            <small class="text-muted">com. 45% / jobs</small>
+                            <h6 class="my-0">Daily (
+                                <?php echo date('Y-m-d');?>)</h6>
+                            <small class="text-muted">com. 55% / jobs</small>
                         </div>
-                        <span class="text-muted">฿
+                        <span class="text-muted">
                             <?php if($m_income_daily->num_rows() > 0 ):?>
-                            <?php echo number_format($m_income_daily->row(0)->beautician_commission); ?>
-                            <?php endif?>/
-                            <?php if($m_income_daily->num_rows() > 0 ):?>
+                            ฿
+                            <?php echo number_format($m_income_daily->row(0)->owner_commission); ?>
+                            /
                             <?php echo $m_income_daily->row(0)->cnt_job; ?>
+                            <?php else: ?>
+                            - / -
                             <?php endif?>
                         </span>
                         </span>
@@ -57,15 +61,34 @@
 
                 </ul>
 
+                <ul class="list-group">
+                    <?php  foreach($m_sum_monthly->result() as $row_sum):?>
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center w-100">
+                            <strong class="">
+                                <?php echo $row_sum->beau_name;?>
+                            </strong>
+                            <span class="">
+                                <?php echo $row_sum->beautician_commission;?> /
+                                <?php echo $row_sum->owner_commission;?>
+                            </span>
+                        </div>
+                        <span class="d-block text-gray-dark">
+                            <?php echo $row_sum->beau_email;?>
+                        </span>
+                    </li>
+                    <?php endforeach;?>
+                </ul>
+
                 <!-- <form class="card p-2">
-                    <div class="input-group">
-                        <select class="form-control" id="month" name="month">
-                         
+        <div class="input-group">
+            <select class="form-control" id="month" name="month">
+             
 
 
-                        </select>
-                    </div>
-                </form> -->
+            </select>
+        </div>
+    </form> -->
             </div>
 
             <div class="col">
@@ -111,10 +134,9 @@
     <?php $this->load->view('include/js')?>
 
     <script type="text/javascript">
-        
-        var m_labels = []  ;
-        var m_datas = []  ;
-        
+        var m_labels = [];
+        var m_datas = [];
+
         <?php
         if($m_service_monthly->num_rows() > 0 ){
             $labels = array();

@@ -1,10 +1,11 @@
-
 <!doctype html>
 <html lang="en">
-    <head>
-        <?php $this->load->view('include/head.php')?>
-    </head>
-  <body>
+
+<head>
+    <?php $this->load->view('include/head.php')?>
+</head>
+
+<body>
 
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -13,52 +14,99 @@
     </header>
 
     <main role="main" class="container">
-        
+
         <div class="container">
-        
-          <div class="row">
-          
-            <?php foreach($m_review->result() as $ser ){ ?>
-                
-                <div class="col-md-6">
-                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                     <div class="card-body d-flex flex-column align-items-start">
-                        <strong class="d-inline-block mb-2 text-primary">World</strong>
-                        <h3 class="mb-0">
-                         <a class="text-dark" href="#">Featured post</a>
-                         </h3>
-                            <div class="mb-1 text-muted">Nov 12</div>
-                                <p class="card-text mb-auto"> <?php echo $ser->review_message ?></p>
-                                <a href="#">Continue reading</a>
-                             </div>
-                         <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]" style="width: 200px; height: 250px;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22250%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20250%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1674a235527%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1674a235527%22%3E%3Crect%20width%3D%22200%22%20height%3D%22250%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2256.203125%22%20y%3D%22131%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
-                     </div>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <img class="card-img-top" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;"
+                            src="<?php echo $m_review->row(0)->service_img?>" data-holder-rendered="true">
+
+                        <!-- <h5 class="card-header">Featured</h5> -->
+
+                        <div class="card-body">
+                            <h4>
+                                <?php echo $m_review->row(0)->service_name ?>
+                            </h4>
+                            <p class="card-text">
+                                <?php echo $m_review->row(0)->service_description ?>
+                            </p>
+
+                            <p class="">Price :
+                                <?php echo $m_review->row(0)->service_price?> ฿</[small]>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="<?php echo site_url('service/reservations/'.$m_review->row(0)->service_id)?>"
+                                            class="btn btn-sm btn-outline-secondary">Reservations</a>
+                                    </div>
+                                </div>
+                        </div>
+
+                    </div>
+
+                    <form class="needs-validation" novalidate="" action="<?php echo current_url();?>" method="POST">
+                        <legend>Post Commnet</legend>
+                        <div class="row">
+                            <div class="col-md-12 mb-12">
+                                <label for="firstName">Your name</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="" value=""
+                                    required="">
+                            </div>
+                            <div class="col-md-12 mb-12">
+                                <label for="lastName">Message</label>
+                                <textarea class="form-control" name="message"></textarea>
+                            </div>
+                        </div>
+                        <hr class="mb-4">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Post</button>
+                    </form>
+
                 </div>
-        
-                
-            <?php } ?>
-            
-            
-          </div>
-        </div> 
 
 
+                <div class="col">
+                    <h4>Comment</h4>
+                    <?php foreach( $m_review->result() as $row ):?>
 
-        
-        
+                    <?php 
+                    
+                    if(empty($row->review_message )){
+                        continue;
+                    }
+                    ?>
+                    <div class="media text-muted pt-3">
+                        <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                            <div class="d-flex justify-content-between align-items-center w-100">
+                                <strong class="text-gray-dark">
+                                    <?php echo $row->review_message?></strong>
+                                <span>
+                                    <?php echo date('Y ,M j',strtotime($row->review_date))?></span>
+                            </div>
+                            <span class="d-block">
+                                <?php echo $row->review_name?></span>
+                        </div>
+                    </div>
+                    <?php endforeach;?>
+                </div>
 
-    
+            </div> <!-- end class row -->
+
+
+        </div>
 
     </main>
 
     <!-- FOOTER -->
     <footer class="footer">
-    <?php $this->load->view('include/footer.php');?>
+        <?php $this->load->view('include/footer.php');?>
     </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <?php $this->load->view('include/js'); ?>
-  </body>
+</body>
+
 </html>

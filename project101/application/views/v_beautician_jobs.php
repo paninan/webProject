@@ -63,7 +63,83 @@
 
                                     <?php if($m_status == "confirm"):?>
                                     <?php if($row->pay == 0):?>
-                                    <a href="<?php echo site_url('beautician/pay/'.$row->reser_id);?>" class="float-right btn btn-sm btn-success "  data-popup="modal" data-modal-id="#cf-customer-paid" >Pay</a>
+
+
+                                    <!-- Modal popup--> 
+                                    <div class="modal fade" id="cf-customer-paid-<?php echo $row->reser_id?>" tabindex="-1"
+                                        role="dialog" aria-labelledby="cf-customer-paidLabel-<?php echo $row->reser_id?>" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="cf-customer-paidLabel-<?php echo $row->reser_id?>">Payment confirm</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="frm-customer-paid-<?php echo $row->reser_id?>" action="<?php echo site_url('beautician/payment');?>" method="POST">
+                                                    <input type="hidden" name="payment_cus_point" value="<?php echo $row->customer_point?>" />
+                                                    <input type="hidden" name="payment_service_id" value="<?php echo $row->service_id?>" />
+                                                    <input type="hidden" name="payment_reser_id" value="<?php echo $row->reser_id?>" />
+                                                    <input type="hidden" name="payment_customer_id" value="<?php echo $row->customer_id?>" />
+                                                        <div class="alert alert-success" role="alert">
+                                                            <div class="d-flex justify-content-between align-items-center w-100">
+                                                                <h6>Point : <strong><?php echo $row->customer_point?></strong></h6>
+                                                                <small>1 point = 1 baht</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="payment_service_name" class="col-sm-4 col-form-label">Service
+                                                                Name</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" readonly class="form-control-plaintext"
+                                                                    name="payment_service_name" value="<?php echo $row->service_name?>"
+                                                                    readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="payment_service_price" class="col-sm-4 col-form-label">Price</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" readonly class="form-control-plaintext"
+                                                                    name="payment_service_price" value="<?php echo $row->service_price?>" >
+                                                            </div>
+                                                        </div>
+                                                        <hr class="mb-4">
+                                                        <?php if($row->customer_point>0):?>
+                                                        <div class="form-group row">
+                                                                <label for="use_point" class="col-sm-4 col-form-label">Use point
+                                                                    Price</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="number" class="form-control text-xl"
+                                                                        min="0"  max="<?php echo $row->customer_point?>"
+                                                                        name="use_point" value="" >
+                                                                </div>
+                                                            </div>
+                                                            <?php endif;?>
+                                                        <div class="form-group row">
+                                                            <label for="payment_price" class="col-sm-4 col-form-label">Total
+                                                                Price</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control text-xl" readonly
+                                                                    name="payment_price" value="<?php echo $row->service_price?>" >
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                        data-btn="close">Close</button>
+                                                    <button type="button" class="btn btn-primary" data-btn="ok" 
+                                                    data-form="#frm-customer-paid-<?php echo $row->reser_id?>"
+                                                    data-modal-target="#cf-customer-paid-<?php echo $row->reser_id?>" >Ok</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END POPUP on bootstrap call modal -->
+
+                                    <a href="<?php echo site_url('beautician/pay/'.$row->reser_id);?>" class="float-right btn btn-sm btn-success "
+                                        data-popup="modal" data-modal-id="#cf-customer-paid-<?php echo $row->reser_id?>">Pay</a>
                                     <?php endif?>
 
                                     <?php if($row->pay == 1):?>
@@ -113,11 +189,11 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Confirm your customer <br/>paid complete 
+                    Confirm your customer <br />paid complete
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" data-btn="close">Close</button>
-                    <button type="button" class="btn btn-primary" data-btn="ok" >Ok</button>
+                    <button type="button" class="btn btn-primary" data-btn="ok">Ok</button>
                 </div>
             </div>
         </div>
@@ -132,36 +208,41 @@
     <script type="text/javascript">
         $(function () {
 
-            $("[data-popup='modal']").on('click',function(event){
-                
+            $("[data-popup='modal']").on('click', function (event) {
+
                 var modalID = $(this).data('modal-id');
                 var url = $(this).prop('href');
                 $(modalID).modal('show');
 
-                $('[data-btn="ok"]',$(modalID)).on('click',function(){
-                    $(modalID).modal('hide');
-                    setTimeout(function () {
-                        window.location.href = url;
-                    }, 300);
-                });
+                event.preventDefault();
+            });
+
+            $("[data-btn='ok']").on('click',function(event){
+                
+                var _frm = $(this).data('form'); 
+                var _modal =$(this).data('modal-target');
+
+                $(_modal).modal('hide');
+                setTimeout(function () {
+                    $(_frm).submit();
+                }, 300);
 
                 event.preventDefault();
             });
 
-            // $('#exampleModal').on('show.bs.modal', function (event) {
-            //     var button = $(event.relatedTarget) // Button that triggered the modal
-            //     var recipient = button.data('whatever') // Extract info from data-* attributes
-            //     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-            //     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-            //     var modal = $(this)
-            //     modal.find('.modal-title').text('New message to ' + recipient)
-            //     modal.find('.modal-body input').val(recipient)
-            // })
+           $("[name=use_point]").on('change',function(){
+               var frm = $(this).closest('form');
+               var mxPoint =$("[name=payment_cus_point]",frm).val();
+               var point = $(this).val();
+               var price = $("[name=payment_service_price]",frm).val();
+            
+               $("[name=payment_price]",frm).val( Math.abs(parseInt(price) - parseInt(point) ));
+               $("h6 strong",frm).text(Math.abs(parseInt(mxPoint)-parseInt(point)));
+           });
         });
-
     </script>
 
-    
+
 </body>
 
 </html>

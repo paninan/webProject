@@ -27,27 +27,47 @@ class Auth extends CI_Controller {
         if( $this->input->post('email') !== FALSE ){
             $email = $this->input->post('email');
             $passwd = $this->input->post('password');
+            $type = $this->input->post('login_type');
 
-            // regular expression validate
-            if( preg_match('/^beautician.+/',$email) ){
-                $email = str_replace('beautician.','',$email);
+            if($type == "member"){
+                $ret = $this->_login_customer($email,$passwd);
+                if( $ret === TRUE){
+                    $this->session->set_userdata('logged_in',TRUE);
+                }
+            }elseif($type == "beautician"){
                 $ret = $this->_login_beauticians($email,$passwd);
                 if( $ret === TRUE){
                     $this->session->set_userdata('logged_in',TRUE);
                 }
-            }else if( preg_match('/^owner.+/',$email) ){
-                $email = str_replace('owner.','',$email);
-                // $email = preg_replace('/(^owner\.$).(\w+)/i', '$2', $email);
+            }elseif($type =="owner"){
                 $ret = $this->_login_owner($email,$passwd);
                 if( $ret === TRUE){
                     $this->session->set_userdata('logged_in',TRUE);
                 }
             }else{
-                $ret = $this->_login_customer($email,$passwd);
-                if( $ret === TRUE){
-                    $this->session->set_userdata('logged_in',TRUE);
-                }
+                $this->session->set_userdata('logged_in',FALSE);
             }
+
+            // // regular expression validate
+            // if( preg_match('/^beautician.+/',$email) ){
+            //     $email = str_replace('beautician.','',$email);
+            //     $ret = $this->_login_beauticians($email,$passwd);
+            //     if( $ret === TRUE){
+            //         $this->session->set_userdata('logged_in',TRUE);
+            //     }
+            // }else if( preg_match('/^owner.+/',$email) ){
+            //     $email = str_replace('owner.','',$email);
+            //     // $email = preg_replace('/(^owner\.$).(\w+)/i', '$2', $email);
+            //     $ret = $this->_login_owner($email,$passwd);
+            //     if( $ret === TRUE){
+            //         $this->session->set_userdata('logged_in',TRUE);
+            //     }
+            // }else{
+            //     $ret = $this->_login_customer($email,$passwd);
+            //     if( $ret === TRUE){
+            //         $this->session->set_userdata('logged_in',TRUE);
+            //     }
+            // }
 
             if($ret === FALSE ){
                 redirect('auth/login');

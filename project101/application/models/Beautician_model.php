@@ -126,6 +126,27 @@ class Beautician_model extends CI_Model {
         }
     }
 
+    public function paid($data=NULL)
+    {
+        if(empty($data)){
+            return FALSE;
+        }
+
+        if(empty($data['payment_reser_id'])){
+            return FALSE;
+        }
+
+        $this->db->insert('payments',$data);
+        $ret = $this->db->affected_rows();
+
+        if($ret > 0 ){
+            $this->pay($data['payment_reser_id']);
+        }
+
+        return $ret;
+
+    }
+
 
     public function income_daily($beau_id=NULL,$date=NULL){
 
@@ -152,14 +173,16 @@ class Beautician_model extends CI_Model {
         ,b.beau_name
         ,s.service_id
         ,s.service_price
+        ,p.payment_total_price
         ,DATE_FORMAT(r.start_time,'%Y%m%d') as _date
         ,count(*) as cnt_job
-        ,sum(s.service_price) as total
-        ,sum(s.service_price) * ? as owner_commission
-        ,sum(s.service_price) * ? as beautician_commission
+        ,sum(p.payment_total_price) as total
+        ,sum(p.payment_total_price) * ? as owner_commission
+        ,sum(p.payment_total_price) * ? as beautician_commission
         from reservations r
         inner join services s on s.service_id = r.service_id
         inner join beauticians b on b.`beau_id` = r.beau_id
+        inner join payments p on p.payment_reser_id=r.reser_id
         where ".implode(" AND ",$wheres)."
         group by _date
         ";
@@ -169,7 +192,7 @@ class Beautician_model extends CI_Model {
             self::COMMISION_OWNER ,
             self::COMMISION_BEAUTICAIN 
         ));
-
+        
         return $rs;
 
     }
@@ -199,14 +222,16 @@ class Beautician_model extends CI_Model {
         ,b.beau_name
         ,s.service_id
         ,s.service_price
+        ,p.payment_total_price
         ,DATE_FORMAT(r.start_time,'%Y%m') as _date
         ,count(*) as cnt_job
-        ,sum(s.service_price) as total
-        ,sum(s.service_price) * ? as owner_commission
-        ,sum(s.service_price) * ? as beautician_commission
+        ,sum(p.payment_total_price) as total
+        ,sum(p.payment_total_price) * ? as owner_commission
+        ,sum(p.payment_total_price) * ? as beautician_commission
         from reservations r
         inner join services s on s.service_id = r.service_id
         inner join beauticians b on b.`beau_id` = r.beau_id
+        inner join payments p on p.payment_reser_id=r.reser_id
         where ".implode(" AND ",$wheres)."
         group by _date
         ";
@@ -247,14 +272,16 @@ class Beautician_model extends CI_Model {
         ,s.service_id
         ,s.service_name
         ,s.service_price
+        ,p.payment_total_price
         ,DATE_FORMAT(r.start_time,'%Y%m') as _date
         ,count(*) as cnt_service
-        ,sum(s.service_price) as total
-        ,sum(s.service_price) * ? as owner_commission
-        ,sum(s.service_price) * ? as beautician_commission
+        ,sum(p.payment_total_price) as total
+        ,sum(p.payment_total_price) * ? as owner_commission
+        ,sum(p.payment_total_price) * ? as beautician_commission
         from reservations r
         inner join services s on s.service_id = r.service_id
         inner join beauticians b on b.`beau_id` = r.beau_id
+        inner join payments p on p.payment_reser_id=r.reser_id
         where ".implode(" AND ",$wheres)."
         group by s.service_id
         ";
@@ -268,6 +295,53 @@ class Beautician_model extends CI_Model {
 
     }
 
-        
+    public function add_beau($data = NULL)
+    {
+        if (empty($data) ){
+            return FALSE;
+        }
 
+        // $this->db->set('beau_name',$this->data['beau_name']);
+        // $this->db->set('beau_lastname',$this->data['beau_lastname']);
+        // $this->db->set('beau_address',$this->data['beau_address']);
+        // $this->db->set('beau_gender',$this->data['beau_gender']);
+        // $this->db->set('beau_email',$this->data['beau_email']);
+        // $this->db->set('beau_password',$this->data['beau_password']);
+        // $this->db->set('beau_phone',$this->data['beau_phone']);
+        // $this->db->set('beau_position',$this->data['beau_position']);
+        $this->db->insert('beauticians',$data);
+
+        return $this->db->affected_rows();
+
+    }
+
+    public function update_beau($beau_id , $data)
+    {
+        if (empty($data) ){
+            return FALSE;
+        }
+        // $this->db->set('beau_name',$this->data['beau_name']);
+        // $this->db->set('beau_lastname',$this->data['beau_lastname']);
+        // $this->db->set('beau_address',$this->data['beau_address']);
+        // $this->db->set('beau_gender',$this->data['beau_gender']);
+        // $this->db->set('beau_email',$this->data['beau_email']);
+        // $this->db->set('beau_password',$this->data['beau_password']);
+        // $this->db->set('beau_phone',$this->data['beau_phone']);
+        // $this->db->set('beau_position',$this->data['beau_position']);
+        $this->db->where('beau_id',$beau_id);
+        $this->db->update('beauticians',$data);
+        return $this->db->affected_rows();
+        
+    }
+
+    public function delete_beau($beau_id =NULL)
+    {
+        if (empty($beau_id) ){
+            return FALSE;
+        }
+
+        $this->db->where('beau_id',$beau_id);
+        $this->db->delete('beauticians');
+        return $this->db->affected_rows();
+    }
 }
