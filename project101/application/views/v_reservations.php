@@ -104,7 +104,7 @@
                 <th width="200px">Time</th>
                 <?php 
                 foreach($beauticians->result() as $row ){
-                    echo "<th>".$row->beau_name."</th>";
+                    echo "<th>".$row->user_firstname."</th>";
                 }
                 ?>
             </tr>
@@ -125,7 +125,7 @@
                 foreach($beauticians->result() as $row ){
 
                     $rs = $this->beautician_model->check_available(
-                        $row->beau_id,
+                        $row->user_id,
                         $has_service, // service id
                         date("Y-m-d H:i:s",$starttime)
                     );
@@ -134,7 +134,7 @@
                     $is_avb = $is_avb && $is_disable;
                     
                     $css_colr = $is_avb ? "style=\"background-color:#9ee0bf\"":"class=\"bg-danger\"";
-                    echo "<td ".$css_colr.">".( $is_avb  ?  "<a href=\"".site_url("service/book/{$has_service}/{$row->beau_id}/${starttime}")."\" class=\"btn btn-success btn-sm btn-block\">Book</a>" : "Not Available" )."</td>";
+                    echo "<td ".$css_colr.">".( $is_avb  ?  "<a href=\"".site_url("service/book/{$has_service}/{$row->user_id}/${starttime}")."\" class=\"btn btn-success btn-sm btn-block\">Book</a>" : "Not Available" )."</td>";
                 }
                 ?>
             </tr>

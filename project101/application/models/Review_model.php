@@ -55,7 +55,7 @@ class Review_model extends CI_Model {
         LEFT JOIN reviews r on r.`service_id` = s.`service_id`
         WHERE 
         {$str_where}
-        GROUP BY r.service_id
+        GROUP BY s.service_id
         ORDER BY r.review_date DESC";
 
         $rs = $this->db->query($sql);

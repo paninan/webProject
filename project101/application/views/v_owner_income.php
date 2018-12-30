@@ -66,7 +66,7 @@
                     <li class="list-group-item">
                         <div class="d-flex justify-content-between align-items-center w-100">
                             <strong class="">
-                                <?php echo $row_sum->beau_name;?>
+                                <?php echo $row_sum->user_firstname;?>
                             </strong>
                             <span class="">
                                 <?php echo $row_sum->beautician_commission;?> /
@@ -74,7 +74,7 @@
                             </span>
                         </div>
                         <span class="d-block text-gray-dark">
-                            <?php echo $row_sum->beau_email;?>
+                            <?php echo $row_sum->user_email;?>
                         </span>
                     </li>
                     <?php endforeach;?>

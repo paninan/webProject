@@ -23,6 +23,7 @@
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">Your service</span>
                 </h4>
+
                 <form action="<?php echo site_url('owner/add_service')?>" method="POST">
                     <div class="form-group">
                         <label for="service_name">Name</label>
@@ -41,7 +42,7 @@
                         <select class="form-control" name="service_time" id="service_time" >
                             <?php
                             for( $i=900; $i <=  (4 * 60 * 60 ) ; $i+=900) {
-                                echo "<option value=\"".gmdate('i',$i)."\">".gmdate("H:i",$i)."</option>";
+                                echo "<option value=\"".($i/60)."\">".gmdate("H:i",$i)."</option>";
                             }
                             ?>
                         </select>

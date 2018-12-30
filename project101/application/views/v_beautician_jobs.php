@@ -78,13 +78,13 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <form id="frm-customer-paid-<?php echo $row->reser_id?>" action="<?php echo site_url('beautician/payment');?>" method="POST">
-                                                    <input type="hidden" name="payment_cus_point" value="<?php echo $row->customer_point?>" />
+                                                    <input type="hidden" name="payment_cus_point" value="<?php echo $row->user_point?>" />
                                                     <input type="hidden" name="payment_service_id" value="<?php echo $row->service_id?>" />
                                                     <input type="hidden" name="payment_reser_id" value="<?php echo $row->reser_id?>" />
                                                     <input type="hidden" name="payment_customer_id" value="<?php echo $row->customer_id?>" />
                                                         <div class="alert alert-success" role="alert">
                                                             <div class="d-flex justify-content-between align-items-center w-100">
-                                                                <h6>Point : <strong><?php echo $row->customer_point?></strong></h6>
+                                                                <h6>Point : <strong><?php echo $row->user_point?></strong></h6>
                                                                 <small>1 point = 1 baht</small>
                                                             </div>
                                                         </div>
@@ -105,17 +105,17 @@
                                                             </div>
                                                         </div>
                                                         <hr class="mb-4">
-                                                        <?php if($row->customer_point>0):?>
+                                                        <?php if($row->user_point>0):?>
                                                         <div class="form-group row">
                                                                 <label for="use_point" class="col-sm-4 col-form-label">Use point
                                                                     Price</label>
                                                                 <div class="col-sm-8">
                                                                     <input type="number" class="form-control text-xl"
-                                                                        min="0"  max="<?php echo $row->customer_point?>"
+                                                                        min="0"  max="<?php echo $row->user_point?>"
                                                                         name="use_point" value="" >
                                                                 </div>
-                                                            </div>
-                                                            <?php endif;?>
+                                                        </div>
+                                                        <?php endif;?>
                                                         <div class="form-group row">
                                                             <label for="payment_price" class="col-sm-4 col-form-label">Total
                                                                 Price</label>
@@ -137,9 +137,10 @@
                                         </div>
                                     </div>
                                     <!-- END POPUP on bootstrap call modal -->
-
+                                    <!--
                                     <a href="<?php echo site_url('beautician/pay/'.$row->reser_id);?>" class="float-right btn btn-sm btn-success "
-                                        data-popup="modal" data-modal-id="#cf-customer-paid-<?php echo $row->reser_id?>">Pay</a>
+                                        data-popup="modal" data-modal-id="#cf-customer-paid-<?php echo $row->reser_id?>">Pay</a> -->
+                                        <span class="float-right disabled btn btn-sm btn-warning">Waiting to pay</span>
                                     <?php endif?>
 
                                     <?php if($row->pay == 1):?>

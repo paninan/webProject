@@ -9,6 +9,7 @@ class Owner extends CI_Controller {
 		$this->load->model('service_model');
 		$this->load->model('beautician_model');
 		$this->load->model('owner_model');
+		$this->load->model('customer_model');
 
 		if( !$this->session->userdata('is_owner')  ){
 			// show_error( "no privilage access !!! ~_~?...",203,"Access message");
@@ -52,7 +53,7 @@ class Owner extends CI_Controller {
 		$data['m_income_monthly'] = $this->owner_model->income_monthly($beau_id,$date);
 		$data['m_sum_monthly'] = $this->owner_model->summary_beau_monthly($date);
 		$data['m_service_monthly'] = $this->owner_model->group_service_monthly($beau_id,$date);
-		
+		// var_dump($data);
 
 		$this->load->view('v_owner_income',$data);
 	}
@@ -88,48 +89,60 @@ class Owner extends CI_Controller {
 	public function add_beautician()
 	{
 		$data = array();
-		$data['beau_name'] = $this->input->post('beau_name');
-		$data['beau_lastname'] = $this->input->post('beau_lastname');
-		$data['beau_address'] = $this->input->post('beau_address');
-		$data['beau_gender'] = $this->input->post('beau_gender');
-		$data['beau_email'] = $this->input->post('beau_email');
-		$data['beau_password'] = $this->input->post('beau_password');
-		$data['beau_phone'] = $this->input->post('beau_phone');
+		$data['user_firstname'] = $this->input->post('user_firstname');
+		$data['user_lastname'] = $this->input->post('user_lastname');
+		$data['user_address'] = $this->input->post('user_address');
+		$data['user_gender'] = $this->input->post('user_gender');
+		$data['user_email'] = $this->input->post('user_email');
+		$data['user_password'] = $this->input->post('user_password');
+		$data['user_phone'] = $this->input->post('user_phone');
+		$data['user_type'] = 'beautician';
+
+		// upload image
+		$img = $this->customer_model->upload_picture('picture');
+		if( !empty($img['upload_data']['image_url']) ){
+			$data['user_picture'] = $img['upload_data']['image_url'];
+		}
 
 		$this->owner_model->add_beau($data);
-
 		redirect('owner/beautician');
 	}
 
-	public function edit_beautician($beau_id=NULL)
+	public function edit_beautician($user_id=NULL)
 	{
 		// update data  if has summit send to post
-		if( $this->input->post('beau_id')!== FALSE ){
+		if( $this->input->post('user_id')!== FALSE ){
 
 			$data = array();
-			$data['beau_name'] = $this->input->post('beau_name');
-			$data['beau_lastname'] = $this->input->post('beau_lastname');
-			$data['beau_address'] = $this->input->post('beau_address');
-			$data['beau_gender'] = $this->input->post('beau_gender');
-			$data['beau_email'] = $this->input->post('beau_email');
-			$data['beau_password'] = $this->input->post('beau_password');
-			$data['beau_phone'] = $this->input->post('beau_phone');
+			$data['user_firstname'] = $this->input->post('user_firstname');
+			$data['user_lastname'] = $this->input->post('user_lastname');
+			$data['user_address'] = $this->input->post('user_address');
+			$data['user_gender'] = $this->input->post('user_gender');
+			$data['user_email'] = $this->input->post('user_email');
+			$data['user_password'] = $this->input->post('user_password');
+			$data['user_phone'] = $this->input->post('user_phone');
 
-			$this->owner_model->update_beau($this->input->post('beau_id'),$data);
+			// upload image
+			$img = $this->customer_model->upload_picture('picture');
+			if( !empty($img['upload_data']['image_url']) ){
+				$data['user_picture'] = $img['upload_data']['image_url'];
+			}
 
-			redirect('owner/beautician/'.$this->input->post('beau_id'));
+			$this->owner_model->update_beau($this->input->post('user_id'),$data);
+
+			redirect('owner/beautician/'.$this->input->post('user_id'));
 		}
 
 		redirect('owner/beautician');
 	}
 
-	public function delete_beautician($beau_id=NULL)
+	public function delete_beautician($user_id=NULL)
 	{
-		if(empty($beau_id)){
+		if(empty($user_id)){
 			redirect('owner/beautician');
 		}
 
-		$this->owner_model->delete_beau($beau_id);
+		$this->owner_model->delete_beau($user_id);
 
 		redirect('owner/beautician');
 	}

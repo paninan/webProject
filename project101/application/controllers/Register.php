@@ -18,13 +18,13 @@ class Register extends CI_Controller {
 
 	public function add()
 	{
-		if($this->input->post ('customer_email') !== FALSE   && !empty($this->input->post ('customer_email')) ){
-			$data['customer_name'] = $this->input->post('customer_name');
-			$data['customer_nickname'] = $this->input->post('customer_nickname');
-			$data['customer_email'] = trim($this->input->post('customer_email'));
-			$data['customer_password'] = $this->input->post('customer_password');
-			$data['customer_phone'] = $this->input->post('customer_phone');
-			$data['customer_gender'] = $this->input->post('customer_gender');
+		if($this->input->post ('user_email') !== FALSE   && !empty($this->input->post ('user_email')) ){
+			$data['user_firstname'] = $this->input->post('user_firstname');
+			$data['user_nickname'] = $this->input->post('user_nickname');
+			$data['user_email'] = trim($this->input->post('user_email'));
+			$data['user_password'] = $this->input->post('user_password');
+			$data['user_phone'] = $this->input->post('user_phone');
+			$data['user_gender'] = $this->input->post('user_gender');
 			$this->customer_model->save($data);
 		}
 

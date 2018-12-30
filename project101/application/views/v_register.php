@@ -16,40 +16,40 @@
   <main role="main" class="container">
     <form class="needs-validation" novalidate="" name="frm-register" id="frm-register" action="<?php echo site_url('register/add');?>" method="POST">
         <div class="form-group">
-            <label for="customer_name">Name</label>
-            <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="name" >
+            <label for="user_firstname">Name</label>
+            <input type="text" class="form-control" id="user_firstname" name="user_firstname" placeholder="name" >
         </div>
         <div class="form-group">
-            <label for="customer_nickname">Nick Name</label>
-            <input type="text" class="form-control" id="customer_nickname" name="customer_nickname" placeholder="name" >
+            <label for="user_nickname">Nick Name</label>
+            <input type="text" class="form-control" id="user_nickname" name="user_nickname" placeholder="name" >
         </div>
         
 
         <div class="form-group">
-            <label for="customer_gender">Gender</label><br />
+            <label for="user_gender">Gender</label><br />
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="customer_gender_male"
-                name="customer_gender" value="M">
-                <label class="form-check-label" for="customer_gender_male">Men</label>
+                <input class="form-check-input" type="radio" id="user_gender_male"
+                name="user_gender" value="M">
+                <label class="form-check-label" for="user_gender_male">Men</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="customer_gender_women"
-                name="customer_gender" value="W">
-                <label class="form-check-label" for="customer_gender_women">Women</label>
+                <input class="form-check-input" type="radio" id="user_gender_women"
+                name="user_gender" value="F">
+                <label class="form-check-label" for="user_gender_women">Women</label>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="customer_email">Email</label>
-            <input type="email" class="form-control" id="customer_email" name="customer_email" placeholder="email@email.com" >
+            <label for="user_email">Email</label>
+            <input type="email" class="form-control" id="user_email" name="user_email" placeholder="email@email.com" >
         </div>
         <div class="form-group">
-            <label for="customer_password">Password</label>
-            <input type="password" class="form-control" id="customer_password" name="customer_password" placeholder="" >
+            <label for="user_password">Password</label>
+            <input type="password" class="form-control" id="user_password" name="user_password" placeholder="" >
         </div>
         <div class="form-group">
-            <label for="customer_phone">Phone</label>
-            <input type="text" class="form-control" id="customer_phone" name="customer_phone" placeholder="088 8888 8888" >
+            <label for="user_phone">Phone</label>
+            <input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="088 8888 8888" >
         </div>
       
       <hr class="mb-4">
@@ -75,7 +75,7 @@
   if($m_customer->num_rows() > 0 ){
     $cus_emails = array();
     foreach($m_customer->result() as $row){
-      array_push($cus_emails,$row->customer_email);
+      array_push($cus_emails,$row->user_email);
     }
     echo "email_exists = ".json_encode($cus_emails);
   }

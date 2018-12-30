@@ -14,11 +14,13 @@
     <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
     <label for="password" class="sr-only">Password</label>
     <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+    <!-- My teacher want to remove user type from login page
     <select class="form-control" name="login_type" id="login_type">
       <option value="member">Member</option>
       <option value="owner">Owner</option>
       <option value="beautician">Beautician</option>
     </select>
+    -->
     <hr class="mb-4">
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>

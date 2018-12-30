@@ -37,7 +37,7 @@ function nav_active($first_segment=NULL,$controller_sgm){
     <li class="nav-item <?php echo nav_active('beautician',$controller_sgm); ?>">
       <a class="nav-link" href="<?php echo site_url('beautician');?>">Beautician</a>
     </li>
-      <?php 
+    <?php 
     }  
     ?>
 
@@ -49,10 +49,10 @@ function nav_active($first_segment=NULL,$controller_sgm){
     <li class="nav-item <?php echo nav_active('owner',$controller_sgm); ?>">
       <a class="nav-link" href="<?php echo site_url('owner');?>">Owner</a>
     </li>
-      <?php 
+    <?php 
     }  
     ?>
-    
+
   </ul>
 
   <?php 

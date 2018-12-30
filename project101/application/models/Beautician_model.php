@@ -10,9 +10,9 @@ class Beautician_model extends CI_Model {
     function read($id = NULL )
     {
         if (!is_null($id)){
-            $rs = $this->db->query("select * from beauticians where beau_id = ? ",array($id));
+            $rs = $this->db->query("select * from users where user_id = ? and user_type = 'beautician'",array($id));
         }else{
-            $rs = $this->db->query('select * from beauticians ');
+            $rs = $this->db->query('select * from users where user_type = \'beautician\'');
         }
         
         return $rs;
@@ -69,12 +69,12 @@ class Beautician_model extends CI_Model {
         r.*  
         ,c.*
         ,s.*
-        ,if(r.customer_id = 0 ,'Guest',c.customer_name) `customer_name`
+        ,if(r.customer_id = 0 ,'Guest',c.user_firstname) `customer_name`
         ,if(r.customer_id = 0 ,r.email,r.email) `contact_email`
         ,IFNULL(r.telephone ,'-') `telephone`
         ,IFNULL(r.message ,'-') `message`
         from reservations r
-        left join customers c on r.`customer_id` = c.`customer_id`
+        left join users c on ( r.`customer_id` = c.`user_id` and user_type='customer' )
         left join services s on  r.`service_id` = s.`service_id`
         where ".implode(" AND ",$wheres)." 
         order by r.start_time desc";
@@ -170,7 +170,7 @@ class Beautician_model extends CI_Model {
         r.start_time
         ,r.end_time
         ,r.beau_id
-        ,b.beau_name
+        ,b.user_firstname
         ,s.service_id
         ,s.service_price
         ,p.payment_total_price
@@ -181,7 +181,7 @@ class Beautician_model extends CI_Model {
         ,sum(p.payment_total_price) * ? as beautician_commission
         from reservations r
         inner join services s on s.service_id = r.service_id
-        inner join beauticians b on b.`beau_id` = r.beau_id
+        inner join users b on ( b.`user_id` = r.beau_id AND b.`user_type`='beautician' )
         inner join payments p on p.payment_reser_id=r.reser_id
         where ".implode(" AND ",$wheres)."
         group by _date
@@ -219,7 +219,7 @@ class Beautician_model extends CI_Model {
         r.start_time
         ,r.end_time
         ,r.beau_id
-        ,b.beau_name
+        ,b.user_firstname
         ,s.service_id
         ,s.service_price
         ,p.payment_total_price
@@ -230,7 +230,7 @@ class Beautician_model extends CI_Model {
         ,sum(p.payment_total_price) * ? as beautician_commission
         from reservations r
         inner join services s on s.service_id = r.service_id
-        inner join beauticians b on b.`beau_id` = r.beau_id
+        inner join users b on ( b.`user_id` = r.beau_id AND b.`user_type`='beautician' )
         inner join payments p on p.payment_reser_id=r.reser_id
         where ".implode(" AND ",$wheres)."
         group by _date
@@ -268,7 +268,7 @@ class Beautician_model extends CI_Model {
         r.start_time
         ,r.end_time
         ,r.beau_id
-        ,b.beau_name
+        ,b.user_firstname
         ,s.service_id
         ,s.service_name
         ,s.service_price
@@ -280,7 +280,7 @@ class Beautician_model extends CI_Model {
         ,sum(p.payment_total_price) * ? as beautician_commission
         from reservations r
         inner join services s on s.service_id = r.service_id
-        inner join beauticians b on b.`beau_id` = r.beau_id
+        inner join users b on ( b.`user_id` = r.beau_id AND b.`user_type`='beautician' )
         inner join payments p on p.payment_reser_id=r.reser_id
         where ".implode(" AND ",$wheres)."
         group by s.service_id

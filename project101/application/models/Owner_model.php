@@ -10,9 +10,9 @@ class Owner_model extends CI_Model {
     function read($id = NULL )
     {
         if (!is_null($id)){
-            $rs = $this->db->query("select * from beauticians where beau_id = ? ",array($id));
+            $rs = $this->db->query("select * from users where user_id = ? and user_type = 'beautician'",array($id));
         }else{
-            $rs = $this->db->query('select * from beauticians ');
+            $rs = $this->db->query('select * from users where user_type = \'beautician\'');
         }
         
         return $rs;
@@ -30,7 +30,7 @@ class Owner_model extends CI_Model {
         
     }
 
-    public function income_daily($beau_id=NULL,$date=NULL){
+    public function income_daily($user_id=NULL,$date=NULL){
 
         $sql = "";
         $where = "";
@@ -49,7 +49,7 @@ class Owner_model extends CI_Model {
         r.start_time
         ,r.end_time
         ,r.beau_id
-        ,b.beau_name
+        ,b.user_firstname
         ,s.service_id
         ,s.service_price
         ,p.payment_total_price
@@ -60,7 +60,7 @@ class Owner_model extends CI_Model {
         ,FLOOR(sum(p.payment_total_price)) * ? as beautician_commission
         from reservations r
         inner join services s on s.service_id = r.service_id
-        inner join beauticians b on b.`beau_id` = r.beau_id
+        inner join users b on ( b.`user_id` = r.beau_id AND b.user_type = 'beautician' )
         inner join payments p on p.payment_reser_id=r.reser_id
     
         where ".implode(" AND ",$wheres)."
@@ -77,14 +77,14 @@ class Owner_model extends CI_Model {
 
     }
 
-    public function income_monthly($beau_id=NULL,$date=NULL){
+    public function income_monthly($user_id=NULL,$date=NULL){
 
         $sql = "";
         $where = "";
         $wheres = array();
 
-        if (!is_null($beau_id)){
-            array_push($wheres," r.beau_id = '".$beau_id."'");
+        if (!is_null($user_id)){
+            array_push($wheres," r.beau_id = '".$user_id."'");
         }
 
         if (!is_null($date)){
@@ -99,7 +99,7 @@ class Owner_model extends CI_Model {
         r.start_time
         ,r.end_time
         ,r.beau_id
-        ,b.beau_name
+        ,b.user_firstname
         ,s.service_id
         ,s.service_price
         ,p.payment_total_price
@@ -110,7 +110,7 @@ class Owner_model extends CI_Model {
         ,FLOOR(sum(p.payment_total_price)) * ? as beautician_commission
         from reservations r
         inner join services s on s.service_id = r.service_id
-        inner join beauticians b on b.`beau_id` = r.beau_id
+        inner join users b on ( b.`user_id` = r.beau_id AND b.user_type = 'beautician' )
         inner join payments p on p.payment_reser_id=r.reser_id
         where ".implode(" AND ",$wheres)."
         group by _date
@@ -144,9 +144,9 @@ class Owner_model extends CI_Model {
         select 
         r.start_time
         ,r.end_time
-        ,b.beau_id
-        ,b.beau_name
-        ,b.beau_email
+        ,b.user_id
+        ,b.user_firstname
+        ,b.user_email
         ,s.service_id
         ,s.service_price
         ,p.payment_total_price
@@ -157,10 +157,10 @@ class Owner_model extends CI_Model {
         ,FLOOR(sum(p.payment_total_price)) * ? as beautician_commission
         from reservations r
         inner join services s on s.service_id = r.service_id
-        inner join beauticians b on b.`beau_id` = r.beau_id
+        inner join users b on ( b.`user_id` = r.beau_id AND b.user_type = 'beautician' )
         inner join payments p on p.payment_reser_id=r.reser_id
         where ".implode(" AND ",$wheres)."
-        group by _month,b.beau_id
+        group by _month,b.user_id
         ";
 
 
@@ -173,14 +173,14 @@ class Owner_model extends CI_Model {
 
     }
 
-    public function group_service_monthly($beau_id=NULL,$date=NULL){
+    public function group_service_monthly($user_id=NULL,$date=NULL){
 
         $sql = "";
         $where = "";
         $wheres = array();
 
-        if (!is_null($beau_id)){
-            array_push($wheres," r.beau_id = '".$beau_id."'");
+        if (!is_null($user_id)){
+            array_push($wheres," r.beau_id = '".$user_id."'");
         }
 
         if (!is_null($date)){
@@ -195,7 +195,7 @@ class Owner_model extends CI_Model {
         r.start_time
         ,r.end_time
         ,r.beau_id
-        ,b.beau_name
+        ,b.user_firstname
         ,s.service_id
         ,s.service_name
         ,s.service_price
@@ -207,7 +207,7 @@ class Owner_model extends CI_Model {
         ,FLOOR(sum(p.payment_total_price)) * ? as beautician_commission
         from reservations r
         inner join services s on s.service_id = r.service_id
-        inner join beauticians b on b.`beau_id` = r.beau_id
+        inner join users b on ( b.`user_id` = r.beau_id AND b.user_type = 'beautician' )
         inner join payments p on p.payment_reser_id=r.reser_id
         where ".implode(" AND ",$wheres)."
         group by s.service_id
@@ -228,39 +228,53 @@ class Owner_model extends CI_Model {
             return FALSE;
         }
 
-        $this->db->insert('beauticians',$data);
+        $this->db->insert('users',$data);
 
         return $this->db->affected_rows();
 
     }
 
-    public function update_beau($beau_id , $data)
+    public function update_beau($user_id , $data)
     {
         if (empty($data) ){
             return FALSE;
         }
-        // $this->db->set('beau_name',$this->data['beau_name']);
+        // $this->db->set('user_firstname',$this->data['user_firstname']);
         // $this->db->set('beau_lastname',$this->data['beau_lastname']);
         // $this->db->set('beau_address',$this->data['beau_address']);
         // $this->db->set('beau_gender',$this->data['beau_gender']);
-        // $this->db->set('beau_email',$this->data['beau_email']);
+        // $this->db->set('user_email',$this->data['user_email']);
         // $this->db->set('beau_password',$this->data['beau_password']);
         // $this->db->set('beau_phone',$this->data['beau_phone']);
         // $this->db->set('beau_position',$this->data['beau_position']);
-        $this->db->where('beau_id',$beau_id);
-        $this->db->update('beauticians',$data);
+        $this->db->where('user_id',$user_id);
+        $this->db->update('users',$data);
         return $this->db->affected_rows();
         
     }
 
-    public function delete_beau($beau_id =NULL)
+    public function delete_beau($user_id =NULL)
     {
-        if (empty($beau_id) ){
+        if (empty($user_id) ){
             return FALSE;
         }
+        
+        $this->db->where('user_id',$user_id);
+        $query = $this->db->get('users');
 
-        $this->db->where('beau_id',$beau_id);
-        $this->db->delete('beauticians');
-        return $this->db->affected_rows();
+        $row_affected = 0;
+        foreach ($query->result() as $row){
+            $this->db->where('user_id',$row->user_id);
+            $this->db->delete('users');
+            $row_affected += $this->db->affected_rows();
+
+            if( $row_affected > 0 ){
+                $path = FCPATH.$row->user_picture;
+                unlink($path);
+            }
+            
+        }
+        
+        return $row_affected;
     }
 }

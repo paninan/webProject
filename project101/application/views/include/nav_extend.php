@@ -36,6 +36,7 @@ if( ( $this->session->userdata('logged_in') === TRUE) && ($this->session->userda
 <div class="nav-scroller bg-white box-shadow">
     <div class="container">
     <nav class="nav nav-underline">
+        <a class="nav-link <?php echo ($this->uri->rsegment(2)=="payment" ? "active" : "" );?>" href="<?php echo site_url('owner/payment');?>">Payment</a>
         <a class="nav-link <?php echo ($this->uri->rsegment(2)=="service" ? "active" : "" );?>" href="<?php echo site_url('owner/service');?>">Service</a>
         <a class="nav-link <?php echo ($this->uri->rsegment(2)=="beautician" ? "active" : "" );?>" href="<?php echo site_url('owner/beautician');?>">Beautician</a>
         <a class="nav-link <?php echo ($this->uri->rsegment(2)=="income" ? "active" : "" );?>" href="<?php echo site_url('owner/income');?>">Income</a>
