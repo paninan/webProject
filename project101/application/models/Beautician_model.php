@@ -85,6 +85,37 @@ class Beautician_model extends CI_Model {
 
     }
 
+    function payment_statue($status=0){
+        
+        $sql = "";
+        $where = "";
+        $wheres = array();
+
+        if (!is_null($status)){
+            array_push($wheres," r.pay = '{$status}'");
+        }
+
+        $sql = "
+        select 
+        r.*  
+        ,c.*
+        ,s.*
+        ,if(r.customer_id = 0 ,'Guest',c.user_firstname) `customer_name`
+        ,if(r.customer_id = 0 ,r.email,r.email) `contact_email`
+        ,IFNULL(r.telephone ,'-') `telephone`
+        ,IFNULL(r.message ,'-') `message`
+        from reservations r
+        left join users c on ( r.`customer_id` = c.`user_id` and user_type='customer' )
+        left join services s on  r.`service_id` = s.`service_id`
+        where ".implode(" AND ",$wheres)." 
+        order by r.start_time desc";
+
+
+        $rs = $this->db->query($sql);
+        return $rs;
+
+    }
+
     public function task_status($reser_id,$status){
 
         if( strtoupper($status) == Beautician_model::STATUS_CONFIRM){
@@ -118,9 +149,9 @@ class Beautician_model extends CI_Model {
             $q = $this->db->get_where('reservations', array('reser_id' => $reser_id));
             foreach( $q->result() as $row ) {
                 $this->db->query("
-                UPDATE customers
-                SET customer_point = customer_point + 1
-                WHERE customer_id = ? ",array($row->customer_id)
+                UPDATE users
+                SET user_point = user_point + 1
+                WHERE user_id = ? ",array($row->customer_id)
                 );
             }
         }

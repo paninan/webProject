@@ -147,5 +147,41 @@ class Owner extends CI_Controller {
 		redirect('owner/beautician');
 	}
 
+	public function payment($status="waiting"){
+		$beau_id = $this->session->userdata('user_id');
+		$flag_status = 0;
+
+		if($status=="waiting"){
+			$flag_status = 0;
+		}else if($status=="paid"){
+			$flag_status = 1;
+		}else{
+			show_error('Not Status support');
+		}
+
+		$data['m_status']		= $status;
+		$data['m_beauti_task'] 	= $this->beautician_model->payment_statue($flag_status);
+		$this->load->view('v_owner_payment',$data);
+	}
+
+	public function paid(){
+		// save payment
+		$data = array(
+			'payment_datetime' => date('Y-m-d H:i:s'),
+			'payment_customer_id' => $this->input->post('payment_customer_id'),
+			'payment_beautician_id' => $this->input->post('payment_beautician_id'),
+			'payment_service_id' => $this->input->post('payment_service_id'),
+			'payment_reser_id' => $this->input->post('payment_reser_id'),
+			'payment_price' => $this->input->post('payment_service_price'),
+			'payment_total_price' => abs( $this->input->post('payment_service_price') - $this->input->post('use_point') ),
+			'payment_is_point' => $this->input->post('use_point'),
+		);
+		// var_dump($data);
+		$this->beautician_model->paid($data);
+
+		redirect('owner/payment/waiting','refresh');
+		
+	}
+
 	
 }
