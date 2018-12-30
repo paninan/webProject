@@ -92,8 +92,22 @@
             </div>
 
             <div class="col">
-                <canvas id="myChart"></canvas>
+                <div class="row">
+                    <div class="col">
+                        <h5>Service Report</h5>
+                        <canvas id="chartService"></canvas>
+                    </div>
+                </div>
+                <hr/>                
+                <div class="row">
+                    <div class="col">
+                        <h5>Beautician Income Report</h5>
+                        <canvas id="chartBeauIncome"></canvas>
+                    </div>
+                </div>
+
             </div>
+
 
         </div>
     </main>
@@ -137,7 +151,21 @@
         var m_labels = [];
         var m_datas = [];
 
-        <?php
+        var b_labels = [];
+        var b_datas = [];
+        
+        <?php 
+        if($m_sum_monthly->num_rows() > 0 ){
+            $labels = array();
+            $datas = array();
+            foreach($m_sum_monthly->result() as $row ){    
+                array_push($labels,$row->user_firstname);
+                array_push($datas, floatval( $row->beautician_commission) );
+            }
+            echo "b_labels = ".json_encode($labels).";";
+            echo "b_datas = ".json_encode($datas).";";
+        }
+        
         if($m_service_monthly->num_rows() > 0 ){
             $labels = array();
             $datas = array();
@@ -151,7 +179,7 @@
         ?>
 
         $(function () {
-            var ctx = $("#myChart");
+            var ctx = $("#chartService");
             var myPieChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
@@ -159,6 +187,36 @@
                     datasets: [{
                         label: '# of Votes',
                         data: m_datas || [],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(255, 159, 64, 0.5)'
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                }
+            });
+
+
+            var ctx = $("#chartBeauIncome");
+            var myPieChart = new Chart(ctx, {
+                type: 'horizontalBar',
+                data: {
+                    labels: b_labels || [],
+                    datasets: [{
+                        label: 'Money', 
+                        data: b_datas || [],
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.5)',
                             'rgba(54, 162, 235, 0.5)',
