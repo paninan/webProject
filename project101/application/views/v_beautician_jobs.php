@@ -20,18 +20,30 @@
         <div class="row">
             <div class="col-md-2">
                 <div class="list-group">
-                    <a href="<?php echo site_url('beautician/jobs/waiting');?>" class="list-group-item list-group-item-action <?php echo ($m_status == "
-                        waiting" ? "active" :""); ?>">Waiting</a>
-                    <a href="<?php echo site_url('beautician/jobs/confirm');?>" class="list-group-item list-group-item-action <?php echo ($m_status == "
-                        confirm" ? "active" :""); ?>">Confirm</a>
-                    <a href="<?php echo site_url('beautician/jobs/reject');?>" class="list-group-item list-group-item-action <?php echo ($m_status == "
-                        reject" ? "active" :""); ?>">Reject</a>
+                    <a href="<?php echo site_url('beautician/jobs/waiting');?>" class="list-group-item list-group-item-action <?php echo ($m_status == "waiting" ? "active" :""); ?>">รอตอบรับ</a>
+                    <a href="<?php echo site_url('beautician/jobs/confirm');?>" class="list-group-item list-group-item-action <?php echo ($m_status == "confirm" ? "active" :""); ?>">ตอบรับแล้ว</a>
+                    <a href="<?php echo site_url('beautician/jobs/reject');?>" class="list-group-item list-group-item-action <?php echo ($m_status == "reject" ? "active" :""); ?>">ปฎิเสธ</a>
                 </div>
 
             </div>
             <div class="col-md-10">
                 <h5>
-                    <?php echo strtoupper($m_status)?>
+                    <?php
+                    $txt = "??";
+                    if($m_status == "waiting"){
+                        $txt = "รอตอบรับ";
+                    }
+
+                    if($m_status == "confirm"){
+                        $txt = "ตอบรับแล้ว";
+                    }
+
+                    if($m_status == "reject"){
+                        $txt = "ปฎิเสธ";
+                    }
+
+                     echo strtoupper($txt)
+                     ?>
                 </h5>
                 <div class="my-3 p-3 bg-white rounded box-shadow">
                     <!-- <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6> -->
@@ -50,14 +62,14 @@
                                         <span class="d-block">
                                             <!-- <strong class="text-gray-dark"> Period </strong>  -->
                                             <span>
-                                                <?php echo $row->start_time?> to
+                                                <?php echo $row->start_time?> ถึง
                                                 <?php echo $row->end_time?></span>
                                         </span>
                                     </div>
                                     <?php if($m_status == "waiting"):?>
                                     <div class="col-4">
-                                        <a href="<?php echo site_url('beautician/reject/'.$row->reser_id);?>" class="float-right btn btn-sm btn-link ">Cancel</a>
-                                        <a href="<?php echo site_url('beautician/confirm/'.$row->reser_id);?>" class="float-right btn btn-sm btn-outline-success">Confirm</a>
+                                        <a href="<?php echo site_url('beautician/reject/'.$row->reser_id);?>" class="float-right btn btn-sm btn-link ">ยกเลิก</a>
+                                        <a href="<?php echo site_url('beautician/confirm/'.$row->reser_id);?>" class="float-right btn btn-sm btn-outline-success">ยืนยัน</a>
                                     </div>
                                     <?php endif?>
 
@@ -71,7 +83,7 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="cf-customer-paidLabel-<?php echo $row->reser_id?>">Payment confirm</h5>
+                                                    <h5 class="modal-title" id="cf-customer-paidLabel-<?php echo $row->reser_id?>">ยืนยันการจ่ายเงิน</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -117,7 +129,7 @@
                                                         </div>
                                                         <?php endif;?>
                                                         <div class="form-group row">
-                                                            <label for="payment_price" class="col-sm-4 col-form-label">Total
+                                                            <label for="payment_price" class="col-sm-4 col-form-label">รวม
                                                                 Price</label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" class="form-control text-xl" readonly
@@ -128,10 +140,10 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                                        data-btn="close">Close</button>
+                                                        data-btn="close">ยกเลิก</button>
                                                     <button type="button" class="btn btn-primary" data-btn="ok" 
                                                     data-form="#frm-customer-paid-<?php echo $row->reser_id?>"
-                                                    data-modal-target="#cf-customer-paid-<?php echo $row->reser_id?>" >Ok</button>
+                                                    data-modal-target="#cf-customer-paid-<?php echo $row->reser_id?>" >ตกลง</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -140,11 +152,11 @@
                                     <!--
                                     <a href="<?php echo site_url('beautician/pay/'.$row->reser_id);?>" class="float-right btn btn-sm btn-success "
                                         data-popup="modal" data-modal-id="#cf-customer-paid-<?php echo $row->reser_id?>">Pay</a> -->
-                                        <span class="float-right disabled btn btn-sm btn-warning">Waiting to pay</span>
+                                        <span class="float-right disabled btn btn-sm btn-warning">รอจ่ายเงิน</span>
                                     <?php endif?>
 
                                     <?php if($row->pay == 1):?>
-                                    <span class="float-right disabled btn btn-sm btn-success ">Paid</span>
+                                    <span class="float-right disabled btn btn-sm btn-success ">จ่ายเงินแล้ว</span>
                                     <?php endif?>
 
                                     <?php endif?>
@@ -153,9 +165,9 @@
                             </div>
                             <span class="d-block">
                                 <?php echo $row->customer_name?></span>
-                            <span class="d-block">Message :
+                            <span class="d-block">ข้อความ :
                                 <?php echo $row->message?></span>
-                            <span class="d-block">Tel. :
+                            <span class="d-block">โทร. :
                                 <?php echo $row->telephone?></span>
 
 

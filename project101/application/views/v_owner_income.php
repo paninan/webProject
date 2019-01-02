@@ -21,15 +21,15 @@
 
             <div class="col-4">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Your Revenue</span>
+                    <span class="text-muted">รายได้</span>
                     <!-- <span class="badge badge-secondary badge-pill"> </span> -->
                 </h4>
                 <ul class="list-group mb-3">
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0">Monthly (
+                            <h6 class="my-0">ต่อเดือน (
                                 <?php echo date('Y-m');?>)</h6>
-                            <small class="text-muted">com. 55% / jobs</small>
+                            <small class="text-muted">ค่าคอมมิชชั่น 80% </small>
                         </div>
                         <span class="text-muted">฿
                             <?php if($m_income_monthly->num_rows() > 0 ):?>
@@ -42,9 +42,9 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0">Daily (
+                            <h6 class="my-0">ต่อวัน (
                                 <?php echo date('Y-m-d');?>)</h6>
-                            <small class="text-muted">com. 55% / jobs</small>
+                            <small class="text-muted">ค่าคอมมิชชั่น 80% </small>
                         </div>
                         <span class="text-muted">
                             <?php if($m_income_daily->num_rows() > 0 ):?>
@@ -94,14 +94,14 @@
             <div class="col">
                 <div class="row">
                     <div class="col">
-                        <h5>Service Report</h5>
+                        <h5>แสดงรายได้จากบริการ</h5>
                         <canvas id="chartService"></canvas>
                     </div>
                 </div>
                 <hr/>                
                 <div class="row">
                     <div class="col">
-                        <h5>Beautician Income Report</h5>
+                        <h5>แสดงรายได้จากช่างเสริมสวย</h5>
                         <canvas id="chartBeauIncome"></canvas>
                     </div>
                 </div>
@@ -211,7 +211,7 @@
 
             var ctx = $("#chartBeauIncome");
             var myPieChart = new Chart(ctx, {
-                type: 'horizontalBar',
+                type: 'bar',
                 data: {
                     labels: b_labels || [],
                     datasets: [{
@@ -235,8 +235,19 @@
                         ],
                         borderWidth: 1
                     }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
                 }
             });
+
+            
 
         });
     </script>

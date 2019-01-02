@@ -21,14 +21,14 @@
 
             <div class="col-4">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Your jobs</span>
+                    <span class="text-muted">รายได้</span>
                     <!-- <span class="badge badge-secondary badge-pill"> </span> -->
                 </h4>
                 <ul class="list-group mb-3">
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0">Monthly</h6>
-                            <small class="text-muted">com. 45% / jobs</small>
+                            <h6 class="my-0">ต่อเดือน</h6>
+                            <small class="text-muted">ค่าคอมมิสชั่น 20%</small>
                         </div>
                         <span class="text-muted">฿
                             <?php if($m_income_monthly->num_rows() > 0 ):?>
@@ -42,7 +42,7 @@
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
                             <h6 class="my-0">Daily</h6>
-                            <small class="text-muted">com. 45% / jobs</small>
+                            <small class="text-muted">ค่าคอมมิสชั่น 20%</small>
                         </div>
                         <span class="text-muted">฿
                             <?php if($m_income_daily->num_rows() > 0 ):?>
@@ -88,7 +88,7 @@
         <div class="modal-dialog  modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="cf-customer-paidLabel">Payment confirm</h5>
+                    <h5 class="modal-title" id="cf-customer-paidLabel">ยืนยัน</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

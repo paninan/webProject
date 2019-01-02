@@ -4,8 +4,8 @@ class Owner_model extends CI_Model {
     const STATUS_WAIT = "WAITING";
     const STATUS_CONFIRM = "CONFIRM";
     const STATUS_REJECT = "REJECT";
-    const COMMISION_OWNER = .55;
-    const COMMISION_BEAUTICAIN = .45;
+    const COMMISION_OWNER = .80;
+    const COMMISION_BEAUTICAIN = .20;
 
     function read($id = NULL )
     {
@@ -121,6 +121,8 @@ class Owner_model extends CI_Model {
             self::COMMISION_OWNER ,
             self::COMMISION_BEAUTICAIN 
         ));
+
+        // echo $this->db->last_query();
         
         return $rs;
 

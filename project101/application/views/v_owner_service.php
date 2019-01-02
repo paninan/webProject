@@ -21,16 +21,16 @@
 
             <div class="col-4">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Your service</span>
+                    <span class="text-muted">บริการ</span>
                 </h4>
 
                 <form action="<?php echo site_url('owner/add_service')?>" method="POST">
                     <div class="form-group">
-                        <label for="service_name">Name</label>
+                        <label for="service_name">ชื่อ</label>
                         <input type="text" class="form-control" id="service_name" name="service_name" placeholder="Service name">
                     </div>
                     <div class="form-group">
-                        <label for="service_type">Type</label>
+                        <label for="service_type">ประเภท</label>
                         <select class="form-control" name="service_type" id="service_type" >
                             <?php foreach($m_service_type->result() as $row):?>
                             <option value="<?php echo $row->service_type_id?>" ><?php echo ucfirst($row->service_type_name)?></option>
@@ -38,7 +38,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="service_time">Duration</label>
+                        <label for="service_time">ระยะเวลา</label>
                         <select class="form-control" name="service_time" id="service_time" >
                             <?php
                             for( $i=900; $i <=  (4 * 60 * 60 ) ; $i+=900) {
@@ -47,24 +47,24 @@
                             ?>
                         </select>
                         <small id="passwordHelpInline" class="text-muted">
-                        min:15 minute , max : 4 hour
+                        น้อยสุด:15 นาที , สูงสุด : 4 ชม.
                         </small>
                     </div>
                     <div class="form-group">
-                        <label for="service_price">Price</label>
+                        <label for="service_price">ราคา</label>
                         <input type="number" min="100" class="form-control" id="service_price" name="service_price" >
                     </div>
 
                     <div class="form-group">
-                        <label for="service_img">Image Link</label>
+                        <label for="service_img">link รูปตัวอย่าง</label>
                         <input type="text"  class="form-control" id="service_img" name="service_img" >
                     </div>
                     
                     <div class="form-group">
-                        <label for="service_description">Description</label>
+                        <label for="service_description">รายละเอียด</label>
                         <textarea class="form-control" id="service_description" rows="3"></textarea>
                     </div>
-                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <button class="btn btn-primary" type="submit">บันทึก</button>
                 </form>
 
             </div>
@@ -87,8 +87,8 @@
                                     <?php echo $ser->service_description ?>
                                 </p>
                                 <p class="card-text">
-                                    <?php echo $ser->service_time ?> Minute</p>
-                                <small class="text-muted">Price :
+                                    <?php echo $ser->service_time ?> นาที</p>
+                                <small class="text-muted">ราคา :
                                     <?php echo $ser->service_price?> ฿</small>
                                 <br />
                                 
@@ -99,9 +99,9 @@
                                     ?>
                                     
                                     <a class="btn <?php echo $class_deactive?> btn-sm" href="<?php echo site_url('owner/service_deactive/'.$ser->service_id);?>"
-                                        class="btn btn-danger">Deactive</a>
+                                        class="btn btn-danger">ไม่ใช้งาน</a>
                                     <a class="btn <?php echo $class_active?>  btn-sm" href="<?php echo site_url('owner/service_active/'.$ser->service_id);?>"
-                                        class="btn btn-danger">Active</a>
+                                        class="btn btn-danger">ใช้งาน</a>
                                 </div>
 
                             </div>

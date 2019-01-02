@@ -21,7 +21,7 @@
             <div class="col-md-2">
                 <div class="list-group">
                     <a href="<?php echo site_url('owner/payment/waiting');?>" class="list-group-item list-group-item-action <?php echo ($m_status == "waiting" ? "active" :""); ?>">
-                    Waiting
+                    รอจ่าย
                     <?php
                     if ( $m_status == "waiting" && $m_beauti_task->num_rows() > 0 ){
                         echo '<span class="badge badge-pill badge-danger align-text-bottom">';
@@ -30,13 +30,24 @@
                     }
                     ?>
                     </a>
-                    <a href="<?php echo site_url('owner/payment/paid');?>" class="list-group-item list-group-item-action <?php echo ($m_status == "paid" ? "active" :""); ?>">Paid</a>
+                    <a href="<?php echo site_url('owner/payment/paid');?>" class="list-group-item list-group-item-action <?php echo ($m_status == "paid" ? "active" :""); ?>">จ่ายแล้ว</a>
                 </div>
 
             </div>
             <div class="col-md-10">
                 <h5>
-                    <?php echo strtoupper($m_status)?>
+                    <?php 
+                    $txt = "??";
+                    if($m_status == "paid"){
+                        $txt = "จ่ายแล้ว";
+                    }
+
+                    if($m_status == "waiting"){
+                        $txt = "รอจ่าย";
+                    }
+                    echo strtoupper($txt);
+                    
+                    ?>
                 </h5>
                 <div class="my-3 p-3 bg-white rounded box-shadow">
                     <!-- <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6> -->
@@ -55,7 +66,7 @@
                                         <span class="d-block">
                                             <!-- <strong class="text-gray-dark"> Period </strong>  -->
                                             <span>
-                                                <?php echo $row->start_time?> to
+                                                <?php echo $row->start_time?> ถึง
                                                 <?php echo $row->end_time?></span>
                                         </span>
                                     </div>
@@ -67,7 +78,7 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="cf-customer-paidLabel-<?php echo $row->reser_id?>">Payment confirm</h5>
+                                                    <h5 class="modal-title" id="cf-customer-paidLabel-<?php echo $row->reser_id?>">ยืนยันการจ่ายเงิน</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -81,13 +92,12 @@
                                                     <input type="hidden" name="payment_beautician_id" value="<?php echo $row->beau_id?>" />
                                                         <div class="alert alert-success" role="alert">
                                                             <div class="d-flex justify-content-between align-items-center w-100">
-                                                                <h6>Point : <strong><?php echo $row->user_point?></strong></h6>
-                                                                <small>1 point = 1 baht</small>
+                                                                <h6>คะแนน : <strong><?php echo $row->user_point?></strong></h6>
+                                                                <small>1 คะแนน = 1 บาท</small>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                            <label for="payment_service_name" class="col-sm-4 col-form-label">Service
-                                                                Name</label>
+                                                            <label for="payment_service_name" class="col-sm-4 col-form-label">ชื่อบริการ</label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" readonly class="form-control-plaintext"
                                                                     name="payment_service_name" value="<?php echo $row->service_name?>"
@@ -95,7 +105,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                            <label for="payment_service_price" class="col-sm-4 col-form-label">Price</label>
+                                                            <label for="payment_service_price" class="col-sm-4 col-form-label">ราคา</label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" readonly class="form-control-plaintext"
                                                                     name="payment_service_price" value="<?php echo $row->service_price?>" >
@@ -104,8 +114,7 @@
                                                         <hr class="mb-4">
                                                         <?php if($row->user_point>0):?>
                                                         <div class="form-group row">
-                                                                <label for="use_point" class="col-sm-4 col-form-label">Use point
-                                                                    Price</label>
+                                                                <label for="use_point" class="col-sm-4 col-form-label">ใช้แต้มแลก ส่วนลด</label>
                                                                 <div class="col-sm-8">
                                                                     <input type="number" class="form-control text-xl"
                                                                         min="0"  max="<?php echo $row->user_point?>"
@@ -114,8 +123,7 @@
                                                         </div>
                                                         <?php endif;?>
                                                         <div class="form-group row">
-                                                            <label for="payment_price" class="col-sm-4 col-form-label">Total
-                                                                Price</label>
+                                                            <label for="payment_price" class="col-sm-4 col-form-label">ราคา รวม</label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" class="form-control text-xl" readonly
                                                                     name="payment_price" value="<?php echo $row->service_price?>" >
@@ -125,34 +133,41 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                                        data-btn="close">Close</button>
+                                                        data-btn="close">ปิดไม่บันทึก</button>
                                                     <button type="button" class="btn btn-primary" data-btn="ok" 
                                                     data-form="#frm-customer-paid-<?php echo $row->reser_id?>"
-                                                    data-modal-target="#cf-customer-paid-<?php echo $row->reser_id?>" >Ok</button>
+                                                    data-modal-target="#cf-customer-paid-<?php echo $row->reser_id?>" >บันทึก</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- END POPUP on bootstrap call modal -->
+                                    <?php if ( strtoupper( $row->status) =="WAITING" ) :?>
+                                    <span class="float-right btn btn-sm btn-outline-success disabled" >รอช่างยืนยันการบริการ</span> 
+                                    <?php endif?>
+
                                     
+                                    <?php if ( strtoupper( $row->status) =="CONFIRM" ) :?>
                                     <a href="<?php echo site_url('beautician/pay/'.$row->reser_id);?>" class="float-right btn btn-sm btn-success "
-                                        data-popup="modal" data-modal-id="#cf-customer-paid-<?php echo $row->reser_id?>">Pay</a> 
+                                        data-popup="modal" data-modal-id="#cf-customer-paid-<?php echo $row->reser_id?>">จ่าย</a> 
+                                    <?php endif?>
+
                                     <?php endif?>
 
                                     
 
 
                                     <?php if($row->pay == 1):?>
-                                        <span class="float-right disabled btn btn-sm btn-success ">Paid</span>
+                                        <span class="float-right disabled btn btn-sm btn-success ">จ่ายแล้ว</span>
                                     <?php endif?>
                                 </div>
 
                             </div>
                             <span class="d-block">
                                 <?php echo $row->customer_name?></span>
-                            <span class="d-block">Message :
+                            <span class="d-block">ข้อความ :
                                 <?php echo $row->message?></span>
-                            <span class="d-block">Tel. :
+                            <span class="d-block">โทร. :
                                 <?php echo $row->telephone?></span>
 
 

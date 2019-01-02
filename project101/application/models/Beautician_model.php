@@ -4,8 +4,9 @@ class Beautician_model extends CI_Model {
     const STATUS_WAIT = "WAITING";
     const STATUS_CONFIRM = "CONFIRM";
     const STATUS_REJECT = "REJECT";
-    const COMMISION_OWNER = .55;
-    const COMMISION_BEAUTICAIN = .45;
+    const COMMISION_OWNER = .80;
+    const COMMISION_BEAUTICAIN = .20;
+    const POINT_PERCENTAGE = .05;
 
     function read($id = NULL )
     {
@@ -143,15 +144,19 @@ class Beautician_model extends CI_Model {
     public function pay($reser_id){
         $this->db->where('reser_id',$reser_id);
         $this->db->set('pay',1);
+        $this->db->set('status',Beautician_model::STATUS_CONFIRM);
         $this->db->update('reservations');
             
         if ($this->db->affected_rows() > 0 ){
-            $q = $this->db->get_where('reservations', array('reser_id' => $reser_id));
+            $q = $this->db->get_where('payments', array('payment_reser_id' => $reser_id));
             foreach( $q->result() as $row ) {
+
+                $point = $row->payment_price * self::POINT_PERCENTAGE;
+
                 $this->db->query("
                 UPDATE users
-                SET user_point = user_point + 1
-                WHERE user_id = ? ",array($row->customer_id)
+                SET user_point = user_point + ?
+                WHERE user_id = ? ",array( $point, $row->payment_customer_id)
                 );
             }
         }

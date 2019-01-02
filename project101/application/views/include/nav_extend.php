@@ -8,7 +8,7 @@ if( ( $this->session->userdata('logged_in') === TRUE) && ($this->session->userda
     <div class="container">
     <nav class="nav nav-underline">
         <a class="nav-link <?php echo ($this->uri->rsegment(2)=="jobs" ? "active" : "" );?>" href="<?php echo site_url('beautician/jobs');?>">
-            jobs
+            งาน
                 <?php 
                 $v_rs = $this->beautician_model->tasks($this->session->userdata('user_id'),'waiting');
                 if ($v_rs->num_rows() > 0 ){
@@ -19,7 +19,7 @@ if( ( $this->session->userdata('logged_in') === TRUE) && ($this->session->userda
                 ?>
             
         </a>
-        <a class="nav-link <?php echo ($this->uri->rsegment(2)=="income" ? "active" : "" );?>" href="<?php echo site_url('beautician/income');?>">income</a>
+        <a class="nav-link <?php echo ($this->uri->rsegment(2)=="income" ? "active" : "" );?>" href="<?php echo site_url('beautician/income');?>">รายได้</a>
         <!-- <a class="nav-link <?php echo ($this->uri->rsegment(2)=="feedback" ? "active" : "");?>"  href="#">feedback</a> -->
     </nav>
 </div>
@@ -36,10 +36,10 @@ if( ( $this->session->userdata('logged_in') === TRUE) && ($this->session->userda
 <div class="nav-scroller bg-white box-shadow">
     <div class="container">
     <nav class="nav nav-underline">
-        <a class="nav-link <?php echo ($this->uri->rsegment(2)=="payment" ? "active" : "" );?>" href="<?php echo site_url('owner/payment');?>">Payment</a>
-        <a class="nav-link <?php echo ($this->uri->rsegment(2)=="service" ? "active" : "" );?>" href="<?php echo site_url('owner/service');?>">Service</a>
-        <a class="nav-link <?php echo ($this->uri->rsegment(2)=="beautician" ? "active" : "" );?>" href="<?php echo site_url('owner/beautician');?>">Beautician</a>
-        <a class="nav-link <?php echo ($this->uri->rsegment(2)=="income" ? "active" : "" );?>" href="<?php echo site_url('owner/income');?>">Income</a>
+        <a class="nav-link <?php echo ($this->uri->rsegment(2)=="payment" ? "active" : "" );?>" href="<?php echo site_url('owner/payment');?>">การจ่ายเงิน</a>
+        <a class="nav-link <?php echo ($this->uri->rsegment(2)=="service" ? "active" : "" );?>" href="<?php echo site_url('owner/service');?>">บริการ</a>
+        <a class="nav-link <?php echo ($this->uri->rsegment(2)=="beautician" ? "active" : "" );?>" href="<?php echo site_url('owner/beautician');?>">ช่างเสริมสวย</a>
+        <a class="nav-link <?php echo ($this->uri->rsegment(2)=="income" ? "active" : "" );?>" href="<?php echo site_url('owner/income');?>">รายได้</a>
         
     </nav>
 </div>

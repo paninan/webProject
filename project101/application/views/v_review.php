@@ -49,11 +49,15 @@
                                 <a class="text-dark" href="#"><?php echo $review->service_name?></a>
                             </h3>
                             <div class="mb-1 text-muted">
-                                last date :<?php echo date('Y M,j',strtotime($review->last_review))?></div>
+                                <small>
+                                ความคิดเห็นล่าสุด :<?php echo date('Y M,j',strtotime($review->last_review))?>
+                </small>
+                            </div>
+                                
                             <p class="card-text mb-auto">
-                            received : <?php echo $review->cnt_review ?> comments
+                            จำนวน : <?php echo $review->cnt_review ?> ความคิดเห็น
                             </p>
-                            <a href="<?php echo site_url('review/read/'.$review->service_id);?>">Reading</a>
+                            <a href="<?php echo site_url('review/read/'.$review->service_id);?>">อ่านต่อ...</a>
                         </div>
                         <img class="card-img-right flex-auto d-none d-md-block" alt="Thumbnail [200x250]" style="width: 200px; height: 250px;"
                             src="<?php echo $review->service_img?>"

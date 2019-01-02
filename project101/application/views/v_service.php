@@ -34,12 +34,12 @@
                     
                     <div class="d-flex justify-content-between align-items-center">
                       <div class="btn-group">
-                        <a href="<?php echo site_url('service/reservations/'.$ser->service_id)?>" class="btn btn-sm btn-outline-secondary">Reservations</a>
-                        <a href="<?php echo site_url('review/service/'.$ser->service_id)?>" class="btn btn-sm btn-outline-secondary">Review</a>
+                        <a href="<?php echo site_url('service/reservations/'.$ser->service_id)?>" class="btn btn-sm btn-outline-success">จอง</a>
+                        <a href="<?php echo site_url('review/service/'.$ser->service_id)?>" class="btn btn-sm btn-outline-secondary">รีวิว</a>
                       </div>
                     </div>
                     <br/>
-                    <small class="text-muted">Price : <?php echo $ser->service_price?> ฿</small>
+                    <small class="text-muted">ราคา : <?php echo $ser->service_price?> ฿</small>
                   </div>
                   
               </div>

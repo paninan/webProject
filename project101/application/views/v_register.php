@@ -16,44 +16,44 @@
   <main role="main" class="container">
     <form class="needs-validation" novalidate="" name="frm-register" id="frm-register" action="<?php echo site_url('register/add');?>" method="POST">
         <div class="form-group">
-            <label for="user_firstname">Name</label>
+            <label for="user_firstname">ชื่อ</label>
             <input type="text" class="form-control" id="user_firstname" name="user_firstname" placeholder="name" >
         </div>
         <div class="form-group">
-            <label for="user_nickname">Nick Name</label>
+            <label for="user_nickname">ช่ือเล่น</label>
             <input type="text" class="form-control" id="user_nickname" name="user_nickname" placeholder="name" >
         </div>
         
 
         <div class="form-group">
-            <label for="user_gender">Gender</label><br />
+            <label for="user_gender">เพศ</label><br />
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="user_gender_male"
                 name="user_gender" value="M">
-                <label class="form-check-label" for="user_gender_male">Men</label>
+                <label class="form-check-label" for="user_gender_male">ชาย</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="user_gender_women"
                 name="user_gender" value="F">
-                <label class="form-check-label" for="user_gender_women">Women</label>
+                <label class="form-check-label" for="user_gender_women">หญิง</label>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="user_email">Email</label>
+            <label for="user_email">อีเมลล์</label>
             <input type="email" class="form-control" id="user_email" name="user_email" placeholder="email@email.com" >
         </div>
         <div class="form-group">
-            <label for="user_password">Password</label>
+            <label for="user_password">รหัสผ่าน</label>
             <input type="password" class="form-control" id="user_password" name="user_password" placeholder="" >
         </div>
         <div class="form-group">
-            <label for="user_phone">Phone</label>
+            <label for="user_phone">เบอร์โทรศัพท์</label>
             <input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="088 8888 8888" >
         </div>
       
       <hr class="mb-4">
-      <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to Register</button>
+      <button class="btn btn-primary btn-lg btn-block" type="submit">สมัครสมาชิก</button>
     </form>
   </main>
 

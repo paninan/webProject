@@ -44,7 +44,7 @@
 
                 <!-- select date -->
                 <div class="col-sm">
-                    <label for="rerv_datetime">Date select</label>
+                    <label for="rerv_datetime">เลือกวัน</label>
                     <select class="form-control" id="rerv_datetime" name="rerv_datetime">
                         <?php 
             // https://stackoverflow.com/questions/3207749/i-have-2-dates-in-php-how-can-i-run-a-foreach-loop-to-go-through-all-of-those-d
@@ -62,7 +62,7 @@
 
                 <!-- select service -->
                 <div class="col-sm">
-                    <label for="service_name">Service select</label>
+                    <label for="service_name">เลือกบริการ</label>
                     <select class="form-control" id="service_name" name="service_name">
                         <?php 
                 $service_active = NULL;
@@ -88,7 +88,7 @@
         ?>
                     <label for="">&nbsp;</label>
                     <div class="col-sm">
-                        <button class="btn btn-success" type="submit"> search</button>
+                        <button class="btn btn-success" type="submit"> ค้นหา</button>
                     </div>
 
                 </div>
@@ -104,7 +104,18 @@
                 <th width="200px">Time</th>
                 <?php 
                 foreach($beauticians->result() as $row ){
-                    echo "<th>".$row->user_firstname."</th>";
+                    // echo '<th><div class="media">
+                    //         <img src="'.site_url($row->user_picture).'" class="mr-3" alt="...">
+                    //         <div class="media-body">
+                    //         <h5 class="mt-0">'.$row->user_firstname.'</h5>
+                    //         </div></th>';
+                    echo "<th>".$row->user_firstname;
+                    if($row->user_picture != ""){
+                        echo "<br/><img src=\"".site_url($row->user_picture)."\" class=\"img-thumbnail rounded\" style=\"max-width:200px;\">";
+                    }
+                    echo "</th>";
+                                    
+                                
                 }
                 ?>
             </tr>
@@ -134,7 +145,7 @@
                     $is_avb = $is_avb && $is_disable;
                     
                     $css_colr = $is_avb ? "style=\"background-color:#9ee0bf\"":"class=\"bg-danger\"";
-                    echo "<td ".$css_colr.">".( $is_avb  ?  "<a href=\"".site_url("service/book/{$has_service}/{$row->user_id}/${starttime}")."\" class=\"btn btn-success btn-sm btn-block\">Book</a>" : "Not Available" )."</td>";
+                    echo "<td ".$css_colr.">".( $is_avb  ?  "<a href=\"".site_url("service/book/{$has_service}/{$row->user_id}/${starttime}")."\" class=\"btn btn-success btn-sm btn-block\">จอง</a>" : "<center>ไม่ว่าง</center>" )."</td>";
                 }
                 ?>
             </tr>

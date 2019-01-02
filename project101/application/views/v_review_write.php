@@ -34,12 +34,12 @@
                                 <?php echo $m_review->row(0)->service_description ?>
                             </p>
 
-                            <p class="">Price :
+                            <p class="">ราคา :
                                 <?php echo $m_review->row(0)->service_price?> ฿</[small]>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a href="<?php echo site_url('service/reservations/'.$m_review->row(0)->service_id)?>"
-                                            class="btn btn-sm btn-outline-secondary">Reservations</a>
+                                            class="btn btn-sm btn-outline-success">จอง</a>
                                     </div>
                                 </div>
                         </div>
@@ -47,27 +47,27 @@
                     </div>
 
                     <form class="needs-validation" novalidate="" action="<?php echo current_url();?>" method="POST">
-                        <legend>Post Commnet</legend>
+                        <legend>แสดงความคิดเห็น</legend>
                         <div class="row">
                             <div class="col-md-12 mb-12">
-                                <label for="firstName">Your name</label>
+                                <label for="firstName">ชื่อ</label>
                                 <input type="text" class="form-control" id="name" name="name" placeholder="" value=""
                                     required="">
                             </div>
                             <div class="col-md-12 mb-12">
-                                <label for="lastName">Message</label>
+                                <label for="lastName">ข้อความ</label>
                                 <textarea class="form-control" name="message"></textarea>
                             </div>
                         </div>
                         <hr class="mb-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Post</button>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">ส่งความคิดเห็น</button>
                     </form>
 
                 </div>
 
 
                 <div class="col">
-                    <h4>Comment</h4>
+                    <h4>ความคิกเห็น</h4>
                     <?php foreach( $m_review->result() as $row ):?>
 
                     <?php 
